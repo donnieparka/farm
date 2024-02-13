@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Product } from './product.js';
 
 const farmSchema = new mongoose.Schema({
 	name: {
@@ -20,6 +21,10 @@ const farmSchema = new mongoose.Schema({
 		},
 	],
 });
-
+farmSchema.post('findOneAndDelete', async function (farm) {
+	if (farm.products.length) {
+		await Product.deleteMany({ _id: { $in: farm.products } });
+	}
+});
 const Farm = mongoose.model('Farm', farmSchema);
 export { farmSchema, Farm };

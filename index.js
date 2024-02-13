@@ -27,13 +27,6 @@ app.get('/products', async (req, res) => {
 	res.render('products', { products });
 });
 
-// ricevo il form e aggiungo il prodotto al database
-app.post('/products', async (req, res) => {
-	const prod = new Product(req.body);
-	await prod.save(prod);
-	res.redirect('/products');
-});
-
 // FARM
 app.get('/farms', async (req, res) => {
 	const farms = await Farm.find({});
@@ -44,11 +37,10 @@ app.get('/farms', async (req, res) => {
 app.get('/farms/new', (req, res) => {
 	res.render('newFarm');
 });
-
 app.post('/farms', async (req, res) => {
 	const { body } = req;
 	const newFarm = new Farm(body);
-	await newFarm.save().then((a) => console.log(a));
+	await newFarm.save();
 	res.redirect('/farms');
 });
 
@@ -59,6 +51,10 @@ app.get('/farms/:id', async (req, res) => {
 	res.render('showFarm', { id, farm });
 });
 
+app.post('/farms/:id/delete', async (req, res) => {
+	await Farm.findByIdAndDelete(req.params.id);
+	res.redirect('/farms');
+});
 // form per inserire nuovo prodotto dentro una farm
 app.get('/farms/:id/products/new', async (req, res) => {
 	const { id } = req.params;
