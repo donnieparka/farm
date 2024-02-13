@@ -4,14 +4,17 @@ import mongoose from 'mongoose';
 import { Product } from './product.js';
 import ejsMate from 'ejs-mate';
 import { Farm, farmSchema } from './farm.js';
+import methodMiddlwear from './methodOverride.js';
 
 const app = express();
 app.engine('ejs', ejsMate);
 app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
+app.use(methodMiddlwear);
 
 main().catch((e) => console.log(e));
+
 async function main() {
 	try {
 		await mongoose.connect('mongodb://localhost:27017/farms');
@@ -51,7 +54,7 @@ app.get('/farms/:id', async (req, res) => {
 	res.render('showFarm', { id, farm });
 });
 
-app.post('/farms/:id/delete', async (req, res) => {
+app.delete('/farms/:id', async (req, res) => {
 	await Farm.findByIdAndDelete(req.params.id);
 	res.redirect('/farms');
 });
