@@ -24,10 +24,8 @@ async function main() {
 // home screen con tutti i prodotti
 app.get('/products', async (req, res) => {
 	const products = await Product.find({});
-	res.render('index', { products });
+	res.render('products', { products });
 });
-
-app.post('/');
 
 // ricevo il form e aggiungo il prodotto al database
 app.post('/products', async (req, res) => {
@@ -54,39 +52,44 @@ app.post('/farms', async (req, res) => {
 	res.redirect('/farms');
 });
 
-// dettagli farm
+// mostro tutti i prodotti di una farm specifica
 app.get('/farms/:id', async (req, res) => {
 	const { id } = req.params;
-	const farm = await Farm.findById(id);
+	const farm = await Farm.findById(id).populate('products');
 	res.render('showFarm', { id, farm });
 });
 
-// mostro tutti i prodotti di una farm specifica
-app.get('/farms/:id/products', async (req, res) => {
+// form per inserire nuovo prodotto dentro una farm
+app.get('/farms/:id/products/new', async (req, res) => {
 	const { id } = req.params;
 	const farm = await Farm.findById(id);
-	res.render('farmProducts', { id, farm });
+	res.render('newProduct', { farm });
 });
 
-// form per inserire nuovo prodotto dentro una farm
-app.get('/farms/:id/products/new', (req, res) => {
+app.post('/farms/:id/products', async (req, res) => {
 	const { id } = req.params;
-	res.render('newProduct', { id });
-});
-
-app.post('/farms/:id/products', (req, res) => {
-	const { id } = req.params;
-	const farm = Farm.findById(id);
+	const farm = await Farm.findById(id);
 	const prod = new Product(req.body);
 	farm.products.push(prod);
 	prod.farm = farm;
+	await farm.save();
+	await prod.save();
+	res.redirect(`/farms/${farm._id}`);
+});
+
+// prodotti per categoria
+app.get('/products/sort/:category', async (req, res) => {
+	const { category } = req.params;
+	// prettier-ignore
+	const prods = await Product.find({ category: category }).populate('farm', 'name');
+	res.render('showCategory', { prods });
 });
 
 // schermata prodotto con dettagli
 app.get('/products/:id', async (req, res) => {
 	const { id } = req.params;
-	const prod = await Product.findById(id);
-	res.render('details', { prod });
+	const prod = await Product.findById(id).populate('farm', 'name');
+	res.render('showProd', { prod });
 });
 app.listen(3000, () => {
 	console.log('listening port 3000');

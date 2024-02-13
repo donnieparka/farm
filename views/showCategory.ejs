@@ -1,0 +1,12 @@
+<%- layout('boilerplate') %>
+<h1><%= `${prods[0].category}s`.toUpperCase() %></h1>
+<ul>
+	<% for(let prod of prods) {%>
+	<li>
+		<a href="/products/<%= prod._id %>"><%= prod.name %></a>: <%= prod.price %>$
+		<br />
+		Farm: <a href="/farms/<%= prod.farm._id %>"><%= prod.farm.name %></a>
+	</li>
+	<br />
+	<% } %>
+</ul>

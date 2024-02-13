@@ -1,8 +1,15 @@
 <% layout('boilerplate') -%>
 <h1><%= farm.name %></h1>
-<ul style="list-style: none">
-	<li><%= farm.city %></li>
-	<li><%= farm.email %></li>
+
+<p><%= farm.city %>, <%= farm.email %></p>
+
+<h1>Prodotti</h1>
+<ul>
+	<% for (const prod of farm.products) { %>
+	<li>
+		<a href="/products/<%= prod._id %>"><%= prod.name %></a>: <%= prod.price %>$
+	</li>
+	<% } %>
 </ul>
-<a href="/products"> back to home</a>
+<a href="/farms"> back to farms</a>
 <a href="/farms/<%= id %>/products/new">Add Product</a>

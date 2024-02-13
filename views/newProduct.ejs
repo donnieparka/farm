@@ -1,6 +1,7 @@
 <% layout('boilerplate') -%>
-<h1>insert new products</h1>
-<form action="/farms/<%= id %>/products" method="post">
+<h1><%= farm.name %></h1>
+<h3>aggiungi un nuovo prodotto</h3>
+<form action="/farms/<%=farm._id%>/products" method="post">
 	<input type="text" name="name" placeholder="product name" />
 	<input type="text" name="price" placeholder="price" />
 	<select name="category">
@@ -12,4 +13,7 @@
 		<option value="cazzo">cazzo</option>
 	</select>
 	<button>submit</button>
+	<br />
+	<a href="/farms/<%=farm._id%>">Back to farm</a>
+	<a href="/products">All products</a>
 </form>
