@@ -4,14 +4,14 @@ import mongoose from 'mongoose';
 import { Product } from './product.js';
 import ejsMate from 'ejs-mate';
 import { Farm, farmSchema } from './farm.js';
-import methodMiddlwear from './methodOverride.js';
+import methodMiddleware from './methodOverride.js';
 
 const app = express();
 app.engine('ejs', ejsMate);
 app.set('views', path.join(process.cwd(), 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(methodMiddlwear);
+app.use(methodMiddleware);
 
 main().catch((e) => console.log(e));
 

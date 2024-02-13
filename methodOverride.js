@@ -1,4 +1,4 @@
-const methodMiddlwear = (req, res, next) => {
+const methodMiddleware = (req, res, next) => {
 	const methodQuery = Object.keys(req.query);
 	if (methodQuery.some((query) => query === '_method')) {
 		req.method = req.query._method;
@@ -6,4 +6,4 @@ const methodMiddlwear = (req, res, next) => {
 	next();
 };
 
-export default methodMiddlwear;
+export default methodMiddleware;
