@@ -1,0 +1,15 @@
+<% layout('boilerplate') -%>
+<h1>insert new products</h1>
+<form action="/farms/<%= id %>/products" method="post">
+	<input type="text" name="name" placeholder="product name" />
+	<input type="text" name="price" placeholder="price" />
+	<select name="category">
+		<option value="figa">figa</option>
+		<option value="fruit">fruit</option>
+		<option value="vegetable">vegetable</option>
+		<option value="troia">troia</option>
+		<option value="culo">culo</option>
+		<option value="cazzo">cazzo</option>
+	</select>
+	<button>submit</button>
+</form>

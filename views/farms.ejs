@@ -1,0 +1,12 @@
+<%- layout('boilerplate') %>
+<h1>farms</h1>
+<ul>
+	<% for( let i = 0; i < farms.length; i++ ) { %>
+	<li>
+		<a href="/farms/<%= farms[i]._id %>"
+			><%= farms[i].name %> <%= farms[i].city %></a
+		>
+	</li>
+	<% } %>
+</ul>
+<a href="/products">products</a>

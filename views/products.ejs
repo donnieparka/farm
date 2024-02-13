@@ -1,0 +1,8 @@
+<% layout('boilerplate') -%>
+<h1>home dei prodotti del cazzo</h1>
+<ul style="list-style: none">
+	<% for (let product of products) { %>
+	<li><a href="/products/<%= product.id %>"><%= product.name %></a></li>
+	<% } %>
+</ul>
+<a href="/products/new">add new product</a>
