@@ -6,6 +6,9 @@
 		<strong>Category</strong>:
 		<a href="/products/sort/<%= prod.category %>"><%= prod.category %></a>
 	</li>
-	<li><strong>Farm</strong>: <%= prod.farm.name %></li>
+	<li>
+		<strong>Farm</strong>:
+		<a href="/farms/<%= prod.farm._id %>"><%=prod.farm.name %></a>
+	</li>
 </ul>
 <a href="/products"> back to home</a>
